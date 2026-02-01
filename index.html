@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-qrcode"></i> QR Code Generator</h1>
+            <p class="subtitle">Convert text, URLs, numbers, and more into QR codes instantly</p>
+        </header>
+
+        <main class="main-content">
+            <div class="generator-section">
+                <div class="input-section">
+                    <div class="input-group">
+                        <label for="qr-input">
+                            <i class="fas fa-edit"></i> Enter text, URL, or numbers:
+                        </label>
+                        <textarea id="qr-input" placeholder="Enter text, URL, phone number, email, etc..." 
+                                  rows="4"></textarea>
+                        <div class="character-count">
+                            <span id="char-count">0</span> characters
+                        </div>
+                    </div>
+
+                    <div class="options-section">
+                        <div class="option-group">
+                            <label for="qr-size">
+                                <i class="fas fa-expand-alt"></i> QR Code Size:
+                            </label>
+                            <select id="qr-size">
+                                <option value="200">200x200</option>
+                                <option value="300" selected>300x300</option>
+                                <option value="400">400x400</option>
+                                <option value="500">500x500</option>
+                            </select>
+                        </div>
+
+                        <div class="option-group">
+                            <label for="error-correction">
+                                <i class="fas fa-shield-alt"></i> Error Correction:
+                            </label>
+                            <select id="error-correction">
+                                <option value="L">Low (7%)</option>
+                                <option value="M" selected>Medium (15%)</option>
+                                <option value="Q">Quartile (25%)</option>
+                                <option value="H">High (30%)</option>
+                            </select>
+                        </div>
+
+                        <div class="color-options">
+                            <div class="color-option">
+                                <label for="qr-color">
+                                    <i class="fas fa-palette"></i> QR Color:
+                                </label>
+                                <input type="color" id="qr-color" value="#000000">
+                            </div>
+                            <div class="color-option">
+                                <label for="bg-color">
+                                    <i class="fas fa-fill"></i> Background:
+                                </label>
+                                <input type="color" id="bg-color" value="#ffffff">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="audio-section">
+                        <h3><i class="fas fa-volume-up"></i> Audio QR Code (Optional)</h3>
+                        <p class="audio-info">Convert text to speech and embed in QR code</p>
+                        <div class="audio-controls">
+                            <div class="voice-selection">
+                                <label for="voice-speed">
+                                    <i class="fas fa-tachometer-alt"></i> Speed:
+                                </label>
+                                <select id="voice-speed">
+                                    <option value="0.5">Slow</option>
+                                    <option value="1" selected>Normal</option>
+                                    <option value="1.5">Fast</option>
+                                </select>
+                            </div>
+                            <button id="preview-audio" class="btn btn-secondary">
+                                <i class="fas fa-play"></i> Preview Audio
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="generate-btn" class="btn btn-primary">
+                            <i class="fas fa-bolt"></i> Generate QR Code
+                        </button>
+                        <button id="reset-btn" class="btn btn-outline">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <div class="output-section">
+                    <div class="qr-container">
+                        <div class="qr-placeholder" id="qr-placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p>Your QR code will appear here</p>
+                        </div>
+                        <canvas id="qr-canvas" style="display: none;"></canvas>
+                        <img id="qr-image" alt="Generated QR Code" style="display: none;">
+                    </div>
+
+                    <div class="download-options">
+                        <button id="download-png" class="btn btn-download">
+                            <i class="fas fa-download"></i> Download PNG
+                        </button>
+                        <button id="download-svg" class="btn btn-download">
+                            <i class="fas fa-download"></i> Download SVG
+                        </button>
+                    </div>
+
+                    <div class="qr-info">
+                        <h3><i class="fas fa-info-circle"></i> QR Code Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Type:</span>
+                                <span id="info-type">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Size:</span>
+                                <span id="info-size">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Created:</span>
+                                <span id="info-date">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Data Length:</span>
+                                <span id="info-length">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="examples-section">
+                <h3><i class="fas fa-lightbulb"></i> Quick Examples</h3>
+                <div class="example-buttons">
+                    <button class="example-btn" data-example="https://github.com">GitHub URL</button>
+                    <button class="example-btn" data-example="+1-555-123-4567">Phone Number</button>
+                    <button class="example-btn" data-example="mailto:example@email.com">Email Address</button>
+                    <button class="example-btn" data-example="WIFI:S:MyNetwork;T:WPA;P:MyPassword;;">WiFi Network</button>
+                    <button class="example-btn" data-example="Hello, welcome to QR Code Generator!">Sample Text</button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>QR Code Generator &copy; 2024 | Made with <i class="fas fa-heart"></i> for easy sharing</p>
+            <p class="github-link">
+                <i class="fab fa-github"></i> 
+                <a href="https://github.com/yourusername/qr-code-generator" target="_blank">View on GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Audio Element for Preview -->
+    <audio id="audio-preview" controls style="display: none;"></audio>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-icon success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>QR Code Generated Successfully!</h2>
+            <p>Your QR code has been created. You can now download it.</p>
+            <button id="modal-ok" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+</body>
+</html>
