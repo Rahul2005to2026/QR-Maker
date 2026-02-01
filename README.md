@@ -17,6 +17,7 @@ A professional web application to convert text, URLs, numbers, and more into QR 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/rahul2005to2026/qr-code-generator.git
-cd qr-code-generator
+[git clone https://github.com/rahul2005to2026/qr-code-generator.git
+cd qr-code-generator](https://github.com/Rahul2005to2026/QR-Maker.git)
 ```
+
